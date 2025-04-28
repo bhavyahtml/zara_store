@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ZARA Online Store</title>
+<link rel="icon" type="image/png" href="Zara_logoontop.png">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Didot&display=swap" rel="stylesheet">
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: #ffffff;
+    color: #111111;
+    font-family: 'Playfair Display', serif;
+    animation: fadeIn 1s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    background: #ffffff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  header * {
+    font-family: 'Didot', serif !important;
+  }
+
+  .left-section {
+    display: flex;
+    align-items: center;
+  }
+
+  .hamburger, .cart-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    margin-right: 20px;
+  }
+
+  .logo img {
+    height: 100px;
+    object-fit: contain;
+    filter: grayscale(100%);
+  }
+
+  .search-bar input {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    outline: none;
+    padding: 4px 8px;
+    font-family: 'Didot', serif;
+    background: transparent;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+  }
+
+  nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #111111;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  nav a:hover {
+    color: #777;
+  }
+
+  .login-btn {
+    margin-left: 20px;
+    background-color: #111;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .login-btn:hover {
+    background-color: #fff;
+    color: #111;
+    border-color: #111;
+  }
+
+  .gif-banner {
+    width: 100%;
+    height: 90vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .gif-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 60px 20px;
+    background: #f5f5f5;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+  }
+
+  section {
+    padding: 40px 20px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .products {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+  .product-card {
+    width: 300px;
+    margin: 20px;
+    text-align: center;
+    transition: transform 0.3s;
+    background: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .product-card:hover {
+    transform: scale(1.03);
+  }
+
+  .product-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    background: #111111;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background 0.3s;
+    border-radius: 5px;
+    font-family: 'Playfair Display', serif;
+  }
+
+  button:hover {
+    opacity: 0.9;
+  }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+    color: #666;
+    border-top: 1px solid #ddd;
+  }
+
+  .hamburger-menu {
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 30px;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+
+  .hamburger-menu a {
+    display: block;
+    margin: 10px 0;
+    text-decoration: none;
+    color: #111;
+  }
+
+  .cart-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 200;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cart-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .cart-modal-content ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .cart-modal-content li {
+    margin-bottom: 10px;
+  }
+
+  a {
+  text-decoration: none; /* Removes the underline */
+  color: inherit; /* Makes the link color inherit from its parent element */
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="left-section">
+    <img src="https://cdn-icons-png.flaticon.com/512/56/56763.png" class="hamburger" onclick="toggleMenu()" alt="menu" />
+    <div class="logo">
+      <img src="Zara_Logo.png" alt="ZARA Logo" />
+    </div>
+  </div>
+
+  <nav>
+    <div class="search-bar">
+      <input type="text" placeholder="Search..." />
+    </div>
+    <a href="#women">Women</a>
+    <a href="#men">Men</a>
+    <a href="#sale">Sale</a>
+    <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" class="cart-icon" onclick="openCart()" alt="cart" />
+    <button class="login-btn" onclick="logIn()">Log In</button>
+  </nav>
+
+  <div class="hamburger-menu" id="hamburgerMenu">
+    <a href="#">Home</a>
+    <a href="#women">Women</a>
+    <a href="#men">Men</a>
+    <a href="#sale">Sale</a>
+    <a href="#contact">Contact</a>
+  </div>
+</header>
+
+<!-- Banner -->
+<div class="gif-banner">
+  <img src="zara_gif1.gif" alt="Fashion GIF">
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <h1>New Summer Collection</h1>
+  <p>Discover the latest trends</p>
+</section>
+
+<!-- Women -->
+<section id="women">
+  <h2 class="section-title">Women</h2>
+  <div class="products">
+    <div class="product-card">
+  <a href="floral_dress.html" style="text-decoration: none; color: inherit;">
+    <img src="floral_shirt.jpg" alt="Dress" />
+    <h3>Floral Dress</h3>
+    <p>$89.99</p>
+  </a>
+  <select>
+    <option value="">Size</option>
+    <option value="S">S</option>
+    <option value="M">M</option>
+    <option value="L">L</option>
+  </select>
+  <button onclick="buyNow('Floral Dress')">Buy Now</button>
+</div>
+
+
+  <div class="product-card">
+  <a href="linen_blazer.html">
+    <img src="linen_blazer.jpg" alt="Linen Blazer" />
+    <h3>Linen Blazer</h3>
+    <p>$79.99</p>
+  </a>
+
+  <select>
+    <option value="">Select Size</option>
+    <option value="S">Small (S)</option>
+    <option value="M">Medium (M)</option>
+    <option value="L">Large (L)</option>
+  </select>
+
+  <button onclick="buyNow('Linen Blazer')">Buy Now</button>
+</div>
+
+  <div class="product-card">
+  <a href="silk_top.html">
+    <img src="silk_top.jpeg" alt="Silk Top" />
+    <h3>Silk Top</h3>
+    <p>$49.99</p>
+  </a>
+
+  <select>
+    <option value="">Select Size</option>
+    <option value="S">Small (S)</option>
+    <option value="M">Medium (M)</option>
+    <option value="L">Large (L)</option>
+  </select>
+
+  <button onclick="buyNow('Silk Top')">Buy Now</button>
+</div>
+
+
+    <div class="product-card">
+      <img src="high-waist_jeans.jpeg" alt="Jeans" />
+      <h3>High-Waist Jeans</h3>
+      <p>$69.99</p>
+      <select>
+  <option value="">Size</option>
+  <option value="S">S</option>
+  <option value="M">M</option>
+  <option value="L">L</option>
+</select>
+
+      <button onclick="buyNow('High-Waist Jeans')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="trench_coat.jpeg" alt="Coat" />
+      <h3>Trench Coat</h3>
+      <p>$129.99</p>
+      <select>
+  <option value="">Size</option>
+  <option value="S">S</option>
+  <option value="M">M</option>
+  <option value="L">L</option>
+</select>
+
+      <button onclick="buyNow('Trench Coat')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="pleated_shirt.jpeg" alt="Skirt" />
+      <h3>Pleated Skirt</h3>
+      <p>$59.99</p>
+      <select>
+  <option value="">Size</option>
+  <option value="S">S</option>
+  <option value="M">M</option>
+  <option value="L">L</option>
+</select>
+
+      <button onclick="buyNow('Pleated Skirt')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="cotton_sweater.jpeg" alt="Sweater" />
+      <h3>Cotton Sweater</h3>
+      <p>$39.99</p>
+      <select>
+  <option value="">Size</option>
+  <option value="S">S</option>
+  <option value="M">M</option>
+  <option value="L">L</option>
+</select>
+
+      <button onclick="buyNow('Cotton Sweater')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="casual_jumpsuit.jpeg" alt="Jumpsuit" />
+      <h3>Casual Jumpsuit</h3>
+      <p>$89.99</p>
+      <select>
+  <option value="">Size</option>
+  <option value="S">S</option>
+  <option value="M">M</option>
+  <option value="L">L</option>
+</select>
+
+      <button onclick="buyNow('Casual Jumpsuit')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="evening_gown.jpeg" alt="Gown" />
+      <h3>Evening Gown</h3>
+      <p>$149.99</p>
+      <select>
+  <option value="">Size</option>
+  <option value="S">S</option>
+  <option value="M">M</option>
+  <option value="L">L</option>
+</select>
+
+      <button onclick="buyNow('Evening Gown')">Buy Now</button>
+    </div>
+  </div>
+</section>
+
+<!-- Men Section -->
+<section id="men">
+  <h2 class="section-title">Men</h2>
+  <div class="products">
+
+    <div class="product-card">
+      <a href="cotton_shirt.html" style="text-decoration: none; color: inherit;">
+        <img src="cotton_shirt.jpeg" alt="Cotton Shirt" />
+        <h3>Cotton Shirt</h3>
+        <p>$49.99</p>
+      </a>
+      <select>
+        <option value="">Size</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+      </select>
+      <button onclick="buyNow('Cotton Shirt')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="chino_trousers.jpeg" alt="Chino Trousers" />
+      <h3>Chino Trousers</h3>
+      <p>$59.99</p>
+      <select>
+        <option value="">Size</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+      </select>
+      <button onclick="buyNow('Chino Trousers')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="formal_blazer.jpeg" alt="Formal Blazer" />
+      <h3>Formal Blazer</h3>
+      <p>$129.99</p>
+      <select>
+        <option value="">Size</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+      </select>
+      <button onclick="buyNow('Formal Blazer')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="denim_jacket.jpeg" alt="Denim Jacket" />
+      <h3>Denim Jacket</h3>
+      <p>$89.99</p>
+      <select>
+        <option value="">Size</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+      </select>
+      <button onclick="buyNow('Denim Jacket')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="graphic_t-shirt.jpeg" alt="Graphic T-Shirt" />
+      <h3>Graphic T-Shirt</h3>
+      <p>$29.99</p>
+      <select>
+        <option value="">Size</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+      </select>
+      <button onclick="buyNow('Graphic T-Shirt')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="wool_sweater.jpeg" alt="Wool Sweater" />
+      <h3>Wool Sweater</h3>
+      <p>$69.99</p>
+      <select>
+        <option value="">Size</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+      </select>
+      <button onclick="buyNow('Wool Sweater')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="cargo_shorts.jpeg" alt="Cargo Shorts" />
+      <h3>Cargo Shorts</h3>
+      <p>$39.99</p>
+      <select>
+        <option value="">Size</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+      </select>
+      <button onclick="buyNow('Cargo Shorts')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="white_sneakers.jpeg" alt="White Sneakers" />
+      <h3>White Sneakers</h3>
+      <p>$99.99</p>
+      <select>
+        <option value="">Size</option>
+        <option value="39">39</option>
+        <option value="40">40</option>
+        <option value="41">41</option>
+        <option value="42">42</option>
+        <option value="43">43</option>
+        <option value="44">44</option>
+      </select>
+      <button onclick="buyNow('White Sneakers')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="bomber_jacket.jpeg" alt="Bomber Jacket" />
+      <h3>Bomber Jacket</h3>
+      <p>$119.99</p>
+      <select>
+        <option value="">Size</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+      </select>
+      <button onclick="buyNow('Bomber Jacket')">Buy Now</button>
+    </div>
+
+  </div> <!-- end of products -->
+</section>
+
+
+<!-- Sale -->
+<section id="sale">
+  <h2 class="section-title">Sale</h2>
+  <div class="products">
+    <div class="product-card">
+      <img src="oversized_jacket.jpeg" alt="Oversized Jacket" />
+      <h3>Oversized Jacket</h3>
+      <p><s>$99.99</s> <strong>$69.99</strong></p>
+      <select>
+  <option value="">Size</option>
+  <option value="S">S</option>
+  <option value="M">M</option>
+  <option value="L">L</option>
+</select>
+
+      <button onclick="buyNow('Oversized Jacket')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="denim_skirt.jpeg" alt="Denim Skirt" />
+      <h3>Denim Skirt</h3>
+      <p><s>$39.99</s> <strong>$24.99</strong></p>
+      <select>
+  <option value="">Size</option>
+  <option value="S">S</option>
+  <option value="M">M</option>
+  <option value="L">L</option>
+</select>
+
+      <button onclick="buyNow('Denim Skirt')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="leather_boots.jpeg" alt="Leather Boots" />
+      <h3>Leather Boots</h3>
+      <p><s>$149.99</s> <strong>$109.99</strong></p><select>
+  <option value="">Size</option>
+  <option value="S">39</option>
+  <option value="M">40</option>
+  <option value="L">41</option>
+  <option value="S">42</option>
+  <option value="M">43</option>
+  <option value="L">44</option>
+</select>
+
+      <button onclick="buyNow('Leather Boots')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="wool_coat.jpeg" alt="Wool Coat" />
+      <h3>Wool Coat</h3>
+      <p><s>$199.99</s> <strong>$139.99</strong></p>
+      <select>
+  <option value="">Size</option>
+  <option value="S">S</option>
+  <option value="M">M</option>
+  <option value="L">L</option>
+</select>
+
+      <button onclick="buyNow('Wool Coat')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="plaid_shirt.jpeg" alt="Plaid Shirt" />
+      <h3>Plaid Shirt</h3>
+      <p><s>$59.99</s> <strong>$34.99</strong></p>
+      <select>
+  <option value="">Size</option>
+  <option value="S">S</option>
+  <option value="M">M</option>
+  <option value="L">L</option>
+</select>
+
+      <button onclick="buyNow('Plaid Shirt')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="mini_dress.jpeg" alt="Mini Dress" />
+      <h3>Mini Dress</h3>
+      <p><s>$89.99</s> <strong>$59.99</strong></p>
+      <select>
+  <option value="">Size</option>
+  <option value="S">S</option>
+  <option value="M">M</option>
+  <option value="L">L</option>
+</select>
+
+      <button onclick="buyNow('Mini Dress')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="slim_jeans.jpeg" alt="Slim Jeans" />
+      <h3>Slim Jeans</h3>
+      <p><s>$79.99</s> <strong>$49.99</strong></p>
+      <select>
+  <option value="">Size</option>
+  <option value="S">S</option>
+  <option value="M">M</option>
+  <option value="L">L</option>
+</select>
+
+      <button onclick="buyNow('Slim Jeans')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="suede_loffers.jpeg" alt="Suede Loafers" />
+      <h3>Suede Loafers</h3>
+      <p><s>$129.99</s> <strong>$89.99</strong></p><select>
+  <option value="">Size</option>
+  <option value="S">39</option>
+  <option value="M">40</option>
+  <option value="L">41</option>
+  <option value="S">42</option>
+  <option value="M">43</option>
+  <option value="L">44</option>
+</select>
+
+      <button onclick="buyNow('Suede Loafers')">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="puffer_jacket.jpeg" alt="Puffer Jacket" />
+      <h3>Puffer Jacket</h3>
+      <p><s>$179.99</s> <strong>$129.99</strong></p>
+      <select>
+  <option value="">Size</option>
+  <option value="S">S</option>
+  <option value="M">M</option>
+  <option value="L">L</option>
+</select>
+
+      <button onclick="buyNow('Puffer Jacket')">Buy Now</button>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>© 2025 ZARA Online Store.</p>
+</footer>
+
+<!-- Cart Modal -->
+<div class="cart-modal" id="cartModal">
+  <div class="cart-modal-content">
+    <h2>Your Cart</h2>
+    <ul id="cartItems"></ul>
+    <button onclick="closeCart()">Close</button>
+  </div>
+</div>
+
+<!-- Contact Section -->
+<section id="contact" style="padding: 50px 20px; background-color: #f8f8f8; text-align: center;">
+  <h2 class="section-title">Contact Us</h2>
+  <p>We'd love to hear from you! Reach us through:</p>
+  <div style="margin-top: 20px;">
+    <a href="mailto:yourstore@example.com" style="margin: 10px; text-decoration: none; color: #333;">📧 Email Us</a> |
+    <a href="tel:+1234567890" style="margin: 10px; text-decoration: none; color: #333;">📞 Call Us</a> |
+    <a href="https://wa.me/1234567890" target="_blank" style="margin: 10px; text-decoration: none; color: #333;">💬 WhatsApp</a> |
+    <a href="https://www.instagram.com/yourstore" target="_blank" style="margin: 10px; text-decoration: none; color: #333;">📸 Instagram</a>
+  </div>
+</section>
+
+
+<script>
+  const cart = [];
+
+  function buyNow(productName, price) {
+    cart.push({ productName, price });
+    alert(`You added "${productName}" to your cart.`);
+  }
+
+  function openCart() {
+    const cartModal = document.getElementById("cartModal");
+    const cartItemsList = document.getElementById("cartItems");
+    
+    cartItemsList.innerHTML = "";
+    cart.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = `${item.productName} - $${item.price.toFixed(2)}`;
+      cartItemsList.appendChild(li);
+    });
+    
+    cartModal.style.display = "flex";
+  }
+
+  function closeCart() {
+    document.getElementById("cartModal").style.display = "none";
+  }
+
+  function logIn() {
+    const username = prompt("Enter username:");
+    const password = prompt("Enter password:");
+    if (username && password) {
+      alert(`Welcome, ${username}!`);
+    } else {
+      alert("Login failed. Please enter username and password.");
+    }
+  }
+
+  function toggleMenu() {
+    const menu = document.getElementById("hamburgerMenu");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  }
+</script>
+
+</body>
+</html>
