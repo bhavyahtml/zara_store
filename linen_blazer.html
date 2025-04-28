@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Linen Blazer - ZARA</title>
+
+  <!-- Favicon (logo on tab) -->
+  <link rel="icon" type="image/png" href="zara_logoontop.png"> 
+  <!-- Make sure you have 'zara_logoontop.png' in your project folder -->
+
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body */
+    body {
+      font-family: 'Didot', serif;
+      background: #f9f9f9;
+      color: #333;
+      padding: 20px;
+    }
+
+    /* Header */
+    header {
+      background: #fff;
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+    }
+
+    header img {
+      height: 40px;
+      margin-right: 20px;
+    }
+
+    header a {
+      text-decoration: none;
+      color: #555;
+      font-size: 16px;
+    }
+
+    /* Product Section */
+    section {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    section img.product-image {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    section h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      color: #222;
+    }
+
+    section p {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #666;
+    }
+
+    /* Size Dropdown */
+    select {
+      padding: 10px;
+      width: 200px;
+      margin-top: 15px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    /* Buy Now Button */
+    button {
+      background-color: #111;
+      color: #fff;
+      padding: 12px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #444;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <img src="zara_logo.png" alt="ZARA Logo">
+  <a href="index.html">← Back to Home</a>
+</header>
+
+<section>
+  <img src="linen_blazer.jpg" alt="Linen Blazer" class="product-image">
+  <h1>Linen Blazer</h1>
+  <p>Price: $79.99</p>
+  <p>Description: A lightweight linen blazer perfect for stylish summer outings.</p>
+
+  <select>
+    <option value="">Select Size</option>
+    <option value="S">Small (S)</option>
+    <option value="M">Medium (M)</option>
+    <option value="L">Large (L)</option>
+  </select>
+
+  <br><br>
+  <button onclick="buyNow()">Buy Now</button>
+</section>
+
+<script>
+  function buyNow() {
+    alert("Thank you! Your Linen Blazer has been added to the cart. 🛒");
+  }
+</script>
+
+</body>
+</html>
